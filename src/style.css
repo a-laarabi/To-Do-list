@@ -15,15 +15,33 @@ body {
   box-shadow: 1px 5px 18px -1px rgb(34 60 80 / 19%);
 }
 
-h1 {
+.header {
+  display: flex;
   padding-top: 5%;
+}
+
+.fa {
+  margin-left: auto;
+  margin-right: 20px;
+  color: #787878;
+}
+
+h1 {
   text-align: center;
+  margin-left: 20px;
+  color: #787878;
+  font-family: monospace;
+  font-size: 1.7rem;
+  font-weight: 500;
 }
 
 .add {
-  width: 100%;
-  height: 50px;
+  margin-top: 30px;
+  padding: 10px 0px 10px 20px;
   border: none;
+  font-style: italic;
+  font-size: 1.2rem;
+  width: 70%;
 }
 
 .item {
@@ -31,6 +49,15 @@ h1 {
   gap: 30px;
   border-bottom: 1px solid #787878;
   padding: 15px;
+}
+
+.itemP {
+  font-size: 1.3em;
+}
+
+.material-icons {
+  font-size:16px;
+  margin-left: auto;
 }
 
 .clear {

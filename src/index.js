@@ -13,7 +13,8 @@ function addToList(iteams) {
   item.classList.add(toDoId);
   item.innerHTML += `
     <input type="checkbox" name="" id="${toDoId}">
-    <p>${holder.value}</p>
+    <p class="itemP">${holder.value}</p>
+    <i class="material-icons">&#xe5d4;</i>
   `
   list.appendChild(item);
 }

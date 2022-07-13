@@ -13,7 +13,7 @@ In this project I have used linter for HTML and CSS and Javascript, to make sure
 
 ## Live Demo (if available)
 
-[Demo](https://a-laarabi.github.io/To-Do-list/)
+[Demo](https://a-laarabi.github.io/To-Do-list/dist/)
 
 
 ## Getting Started
