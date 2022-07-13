@@ -26,6 +26,13 @@ h1 {
   border: none;
 }
 
+.item {
+  display: flex;
+  gap: 30px;
+  border-bottom: 1px solid #787878;
+  padding: 15px;
+}
+
 .clear {
   background: #dddddd;
   border: none;
