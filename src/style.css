@@ -37,7 +37,7 @@ h1 {
 
 .add {
   margin-top: 30px;
-  padding: 10px 0px 10px 20px;
+  padding: 10px 0 10px 20px;
   border: none;
   font-style: italic;
   font-size: 1.2rem;
@@ -56,12 +56,12 @@ h1 {
 }
 
 .material-icons {
-  font-size:16px;
+  font-size: 16px;
   margin-left: auto;
 }
 
 .clear {
-  background: #dddddd;
+  background: #ddd;
   border: none;
   text-align: center;
   width: 100%;
