@@ -1,36 +1,81 @@
+import Iteams from './modules/const.js';
+import editItems from './modules/editItem.js';
+import removeItems from './modules/remove.js';
+import getItemsLocalStorage from './modules/localItems.js';
 import './style.css';
 
 const form = document.querySelector('.form');
 const list = document.querySelector('.mainList');
 const holder = document.querySelector('.add');
 
-const arr = [];
-let toDoId = 0;
+let arr = [] || JSON.parse(localStorage.getItem('items'));
 
-function addToList() {
+function completeItem() {
+  const localData = localStorage.getItem('items');
+  const parsedData = JSON.parse(localData);
+  const eachItem = document.querySelectorAll('.eachItem');
+  for (let i = 0; i < eachItem.length; i += 1) {
+    if (eachItem[i].classList.contains('strike')) {
+      parsedData[i].completed = true;
+    } else {
+      parsedData[i].completed = false;
+    }
+    localStorage.setItem('items', JSON.stringify(parsedData));
+  }
+};
+
+function addToList(description) {
   const item = document.createElement('div');
   item.classList.add('item');
-  item.classList.add(toDoId);
   item.innerHTML += `
-    <input type="checkbox" name="" id="${toDoId}">
-    <p class="itemP">${holder.value}</p>
-    <i class="material-icons">&#xe5d4;</i>
+    <input class="checkBox" type="checkBox">
+    <p class="itemP">${description}</p>
+    <i class="material-icons dots">&#xe5d4;</i>
+    <i class="fa trash">&#xf1f8;</i>
   `;
   list.appendChild(item);
-}
 
-function createIteam(text) {
-  const iteams = {
-    description: text,
-    completed: false,
-    index: toDoId += 1,
-  };
-  arr.push(iteams);
-  addToList();
-  holder.value = '';
+  const checkbox = document.querySelectorAll('.checkBox');
+  checkbox.forEach((checkboxIn) => {
+    checkboxIn.addEventListener('click', () => {
+      checkboxIn.nextElementSibling.classList.toggle('strike');
+      checkboxIn.parentNode.classList.toggle('clicked-on');
+      const dotsIcon = checkboxIn.parentNode.childNodes[5];
+      dotsIcon.classList.toggle('inactive-dots');
+      const trashIcon = checkboxIn.parentNode.childNodes[7];
+      trashIcon.classList.toggle('active-trash');
+      completeItem();
+    });
+  });
+  //send item to local storage
+  const newItem = new Iteams(description, false, checkbox.length);
+  arr.push(newItem);
+  const stringedItems = JSON.stringify(arr);
+  localStorage.setItem('items', stringedItems);
+
+  // edit
+  const editItem = document.querySelectorAll('.dots');
+  editItem.forEach((item) => {
+    item.addEventListener('click', () => {
+      item.parentNode.classList.add('clicked-on');
+      editItems(item.previousElementSibling);
+    });
+  });
+
+  const toRemove = document.querySelectorAll('.trash');
+  toRemove.forEach((item) => {
+    item.addEventListener('click', () => {
+      removeItems(item.parentNode);
+    });
+  });
 }
 
 form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  createIteam(holder.value);
-});
+
+  if (holder.value != '') {
+    addToList(holder.value);
+    holder.value = null;
+  }
+ });
+
+ window.addEventListener('load', getItemsLocalStorage);

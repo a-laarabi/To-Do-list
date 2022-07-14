@@ -68,3 +68,34 @@ h1 {
   padding: 20px;
   color: #787878;
 }
+
+
+.strike {
+  color: rgb(113, 109, 109);
+  text-decoration: line-through;
+}
+
+.clicked-on {
+  background-color: #dfdebc;
+}
+
+.inactive-dots {
+  display: none;
+}
+
+.dots {
+  cursor: pointer;
+}
+
+.trash {
+  display: none;
+  cursor: pointer;
+}
+
+.active-trash {
+  display: block;
+}
+
+.new-input {
+  background-color: #dfdebc;
+}
