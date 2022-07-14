@@ -2,6 +2,40 @@ import Iteams from './modules/const.js';
 import editItems from './modules/editItem.js';
 import './style.css';
 
+let arr = [] || JSON.parse(localStorage.getItem('items'));
+const list = document.querySelector('.mainList');
+
+function completeItem() {
+  const localData = localStorage.getItem('items');
+  const parsedData = JSON.parse(localData);
+  const eachItem = document.querySelectorAll('.eachItem');
+  for (let i = 0; i < eachItem.length; i += 1) {
+    if (eachItem[i].classList.contains('strike')) {
+      parsedData[i].completed = true;
+    } else {
+      parsedData[i].completed = false;
+    }
+    localStorage.setItem('items', JSON.stringify(parsedData));
+  }
+}
+
+function removeItems(child) {
+  list.removeChild(child);
+  let count = 1;
+  const parsedItems = localStorage.getItem('items');
+  let dataLocal = JSON.parse(parsedItems);
+  arr = JSON.parse(localStorage.getItem('items'));
+  arr.splice((child.id) - 1, 1);
+  dataLocal = arr;
+
+  dataLocal.map((item) => {
+    item.index = count;
+    count += 1;
+    return null;
+  });
+  localStorage.setItem('items', JSON.stringify(dataLocal));
+}
+
 function getItemsLocalStorage() {
   const localItem = localStorage.getItem('items');
   const items = JSON.parse(localItem);
@@ -50,42 +84,8 @@ function getItemsLocalStorage() {
   localStorage.setItem('items', JSON.stringify(arr));
 }
 
-function removeItems(child) {
-  list.removeChild(child);
-  let count = 1;
-  const parsedItems = localStorage.getItem('items');
-  let data_local = JSON.parse(parsedItems);
-  arr = JSON.parse(localStorage.getItem('items'));
-  arr.splice((child.id) - 1, 1);
-  data_local = arr;
-
-  data_local.map((item) => {
-    item.index = count;
-    count += 1;
-    return null;
-  });
-  localStorage.setItem('items', JSON.stringify(data_local));
-}
-
 const form = document.querySelector('.form');
-const list = document.querySelector('.mainList');
 const holder = document.querySelector('.add');
-
-let arr = [] || JSON.parse(localStorage.getItem('items'));
-
-function completeItem() {
-  const localData = localStorage.getItem('items');
-  const parsedData = JSON.parse(localData);
-  const eachItem = document.querySelectorAll('.eachItem');
-  for (let i = 0; i < eachItem.length; i += 1) {
-    if (eachItem[i].classList.contains('strike')) {
-      parsedData[i].completed = true;
-    } else {
-      parsedData[i].completed = false;
-    }
-    localStorage.setItem('items', JSON.stringify(parsedData));
-  }
-}
 
 function addToList(description) {
   const item = document.createElement('div');
