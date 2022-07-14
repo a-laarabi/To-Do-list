@@ -21,6 +21,6 @@ function editItems(itemToReplace) {
       }
     }
   });
-};
+}
 
 export default editItems;

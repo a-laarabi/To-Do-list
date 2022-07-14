@@ -1,8 +1,71 @@
 import Iteams from './modules/const.js';
 import editItems from './modules/editItem.js';
-import removeItems from './modules/remove.js';
-import getItemsLocalStorage from './modules/localItems.js';
 import './style.css';
+
+function getItemsLocalStorage() {
+  const localItem = localStorage.getItem('items');
+  const items = JSON.parse(localItem);
+  items.map((item) => {
+    arr.push(item);
+    const newItem = document.createElement('div');
+    newItem.classList.add('item');
+    const newId = item.index;
+    newItem.setAttribute('id', newId);
+    newItem.innerHTML = `
+  <input type="checkbox" class="checkBox" id="${item.index}">
+  <p class="eachItem" class="itemP" id="span-${item.index}">${item.description}</p>
+  <i id="dots-${item.index}" class="dots material-icons">&#xe5d4;</i>
+  <i id="trash-${item.index}" class="fa trash">&#xf1f8;</i>
+  `;
+    list.appendChild(newItem);
+    const editItem = document.querySelectorAll('.dots');
+    editItem.forEach((item) => {
+      item.addEventListener('click', () => {
+        item.parentNode.classList.add('clicked-on');
+        editItems(item.previousElementSibling, newItem);
+      });
+    });
+    return null;
+  });
+
+  const checkbox = document.querySelectorAll('.checkBox');
+  checkbox.forEach((checkboxInput) => {
+    checkboxInput.addEventListener('click', () => {
+      checkboxInput.nextElementSibling.classList.toggle('strike');
+      checkboxInput.parentNode.classList.toggle('clicked-on');
+      const ellipsisIcon = checkboxInput.parentNode.childNodes[5];
+      ellipsisIcon.classList.toggle('inactive-dots');
+      const trashIcon = checkboxInput.parentNode.childNodes[7];
+      trashIcon.classList.toggle('active-trash');
+      completeItem();
+    });
+  });
+
+  const removeItem = document.querySelectorAll('.trash');
+  removeItem.forEach((item) => {
+    item.addEventListener('click', () => {
+      removeItems(item.parentNode);
+    });
+  });
+  localStorage.setItem('items', JSON.stringify(arr));
+}
+
+function removeItems(child) {
+  list.removeChild(child);
+  let count = 1;
+  const parsedItems = localStorage.getItem('items');
+  let data_local = JSON.parse(parsedItems);
+  arr = JSON.parse(localStorage.getItem('items'));
+  arr.splice((child.id) - 1, 1);
+  data_local = arr;
+
+  data_local.map((item) => {
+    item.index = count;
+    count += 1;
+    return null;
+  });
+  localStorage.setItem('items', JSON.stringify(data_local));
+}
 
 const form = document.querySelector('.form');
 const list = document.querySelector('.mainList');
@@ -22,7 +85,7 @@ function completeItem() {
     }
     localStorage.setItem('items', JSON.stringify(parsedData));
   }
-};
+}
 
 function addToList(description) {
   const item = document.createElement('div');
@@ -47,7 +110,7 @@ function addToList(description) {
       completeItem();
     });
   });
-  //send item to local storage
+  // send item to local storage
   const newItem = new Iteams(description, false, checkbox.length);
   arr.push(newItem);
   const stringedItems = JSON.stringify(arr);
@@ -70,12 +133,11 @@ function addToList(description) {
   });
 }
 
-form.addEventListener('submit', (e) => {
-
-  if (holder.value != '') {
+form.addEventListener('submit', () => {
+  if (holder.value !== '') {
     addToList(holder.value);
     holder.value = null;
   }
- });
+});
 
- window.addEventListener('load', getItemsLocalStorage);
+window.addEventListener('load', getItemsLocalStorage);
