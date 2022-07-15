@@ -4,19 +4,24 @@ import './style.css';
 
 let arr = [] || JSON.parse(localStorage.getItem('items'));
 const list = document.querySelector('.mainList');
+const clear = document.querySelector('.clear');
 
 function completeItem() {
   const localData = localStorage.getItem('items');
   const parsedData = JSON.parse(localData);
   const eachItem = document.querySelectorAll('.eachItem');
-  for (let i = 0; i < eachItem.length; i += 1) {
-    if (eachItem[i].classList.contains('strike')) {
+
+  let i = 0;
+  eachItem.forEach((item,i) => {
+    if (item.classList.contains('strike')){
       parsedData[i].completed = true;
     } else {
       parsedData[i].completed = false;
     }
+    i =+1;
     localStorage.setItem('items', JSON.stringify(parsedData));
-  }
+  })
+
 }
 
 function removeItems(child) {
@@ -81,6 +86,21 @@ function getItemsLocalStorage() {
       removeItems(item.parentNode);
     });
   });
+
+  clear.addEventListener('click', () => {
+    console.log("clicked")
+    const localItem = localStorage.getItem('items');
+    const parsedData = JSON.parse(localItem);
+    const deleteCheck = parsedData.filter((item) => item.completed === false);
+    let i = 0;
+    deleteCheck.forEach((item,i) => {
+      item.index = i + 1;
+    })
+
+    localStorage.setItem('items', JSON.stringify(deleteCheck));
+    window.location.reload();
+  });
+
   localStorage.setItem('items', JSON.stringify(arr));
 }
 

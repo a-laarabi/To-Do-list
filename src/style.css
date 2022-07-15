@@ -71,6 +71,7 @@ h1 {
   width: 100%;
   padding: 20px;
   color: #787878;
+  cursor: pointer;
 }
 
 .strike {
