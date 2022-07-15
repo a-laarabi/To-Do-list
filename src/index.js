@@ -11,17 +11,14 @@ function completeItem() {
   const parsedData = JSON.parse(localData);
   const eachItem = document.querySelectorAll('.eachItem');
 
-  let i = 0;
-  eachItem.forEach((item,i) => {
-    if (item.classList.contains('strike')){
+  eachItem.forEach((item, i) => {
+    if (item.classList.contains('strike')) {
       parsedData[i].completed = true;
     } else {
       parsedData[i].completed = false;
     }
-    i =+1;
     localStorage.setItem('items', JSON.stringify(parsedData));
-  })
-
+  });
 }
 
 function removeItems(child) {
@@ -88,14 +85,12 @@ function getItemsLocalStorage() {
   });
 
   clear.addEventListener('click', () => {
-    console.log("clicked")
     const localItem = localStorage.getItem('items');
     const parsedData = JSON.parse(localItem);
     const deleteCheck = parsedData.filter((item) => item.completed === false);
-    let i = 0;
-    deleteCheck.forEach((item,i) => {
+    deleteCheck.forEach((item, i) => {
       item.index = i + 1;
-    })
+    });
 
     localStorage.setItem('items', JSON.stringify(deleteCheck));
     window.location.reload();
